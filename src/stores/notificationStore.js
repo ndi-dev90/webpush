@@ -21,7 +21,8 @@ export const useNotificationStore = defineStore('notification', {
     sendNotification(title, text, timeout = 2) {
       if (this.permission === `granted`) {
         setTimeout(() => {
-          navigator.serviceWorker.getRegistration('/').then((reg) => {
+          navigator.serviceWorker.getRegistration('/webpush/').then((reg) => {
+            console.log('SW REG', reg)
             reg.showNotification(title, { body: text })
           })
         }, timeout * 1000)

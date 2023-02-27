@@ -8,6 +8,19 @@
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      function register() {
+          console.log('ENV', import.meta.env)
+          const sw = `./sw.js`
+          navigator.serviceWorker
+            .register(sw, { scope: import.meta.env.prod ? `/webpush/` : `` })
+            .then((registration) => {
+              registration.id = `appsw`
+              return registration
+            })
+        }
+        register()
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

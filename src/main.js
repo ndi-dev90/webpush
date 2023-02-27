@@ -9,18 +9,6 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-function register() {
-  console.log('ENV', import.meta.env)
-  const sw = import.meta.env.prod ? `../../webpush/sw.js` : `../../sw.js`
-  navigator.serviceWorker
-    .register(sw, { scope: import.meta.env.prod ? `/webpush/` : `` })
-    .then((registration) => {
-      registration.id = `appsw`
-      return registration
-    })
-}
-register()
-
 const vuetify = createVuetify({
   components,
   directives

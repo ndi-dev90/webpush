@@ -12,10 +12,8 @@
     <div id="app"></div>
     <script>
       function register() {
-          console.log('ENV', import.meta.env)
-          const sw = `./sw.js`
           navigator.serviceWorker
-            .register(sw, { scope: import.meta.env.prod ? `/webpush/` : `` })
+            .register(`./sw.js`, { scope: `/webpush/` })
             .then((registration) => {
               registration.id = `appsw`
               return registration

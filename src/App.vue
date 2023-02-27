@@ -54,15 +54,18 @@ export default defineComponent({
         `This is an instant notification with some emojis: 💁👌🎍😍!`,
         0
       )
+    },
+    notifyMe8() {
+      this.notificationStore.sendNotification(`888`, `888`, 0)
     }
   }
 })
 </script>
 
 <template>
-  <v-app class="w-100 h-100" style="background-color: transparent;">
+  <v-app class="w-100 h-100" style="background-color: transparent">
     <v-container class="d-flex justify-center align-center w-100 h-100">
-      <v-card elevation="0" style="background-color: transparent;">
+      <v-card elevation="0" style="background-color: transparent">
         <v-card-text>
           <v-btn v-if="show" @click="requestPermission">WANT TO BE NOTIFIED!</v-btn>
           <v-row v-else>
@@ -74,6 +77,11 @@ export default defineComponent({
             </v-col>
           </v-row>
           <pre color="gray" class="my-5 text-center">{{ text }}</pre>
+          <v-row>
+            <v-col cols="12" class="d-flex justify-center">
+              <v-btn color="secondary" @click="notifyMe8">ANOTHER</v-btn>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-container>
@@ -107,10 +115,10 @@ header {
     flex-wrap: wrap;
   }
 }
- pre {
+pre {
   background-color: black;
   color: white;
   padding: 1rem;
   border-radius: 6px;
- }
+}
 </style>

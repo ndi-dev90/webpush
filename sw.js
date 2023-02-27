@@ -3,6 +3,13 @@ self.addEventListener('install', (event) => {
 })
 
 self.addEventListener('message', (e) => {
+  if (e.data.test === `tstt`) {
+    setTimeout(() => {
+      self.registration.showNotification(`8MILES`, {
+        body: `8000 milliseconds went by like drops in a river, dun you think?`
+      })
+    }, 8000)
+  }
   console.log('GOTMSGGGG2', e)
   self.clients
     .matchAll({

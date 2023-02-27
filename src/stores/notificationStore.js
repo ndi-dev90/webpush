@@ -18,10 +18,12 @@ export const useNotificationStore = defineStore('notification', {
     }
   },
   actions: {
-    sendNotification(text, timeout = 2) {
+    sendNotification(title, text, timeout = 2) {
       if (this.permission === `granted`) {
         setTimeout(() => {
-          new Notification(text)
+          navigator.serviceWorker.getRegistration('/').then((reg) => {
+            reg.showNotification(title, { body: text })
+          })
         }, timeout * 1000)
       } else {
         alert(
@@ -31,7 +33,7 @@ export const useNotificationStore = defineStore('notification', {
     },
     setPermission(permission) {
       this.permission = permission
-      this.sendNotification(`Hello there! Thanks for enabling notifications! :)`)
+      this.sendNotification(`HELLO`, `Hello there! Thanks for enabling notifications! :)`)
     }
   }
 })

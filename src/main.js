@@ -9,6 +9,14 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+function register() {
+  navigator.serviceWorker.register('../../sw.js').then((registration) => {
+    registration.id = `appsw`
+    return registration
+  })
+}
+register()
+
 const vuetify = createVuetify({
   components,
   directives

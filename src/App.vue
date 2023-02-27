@@ -38,6 +38,7 @@ export default defineComponent({
     },
     notifyMe() {
       this.notificationStore.sendNotification(
+        `Scheduled notification`,
         `Hello, you have just requested a notification, so here we go!`,
         5
       )

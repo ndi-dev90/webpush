@@ -5,8 +5,8 @@
     <link rel="icon" href="/webpush/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vite App</title>
-    <script type="module" crossorigin src="/webpush/assets/index-97e8f4c8.js"></script>
-    <link rel="stylesheet" href="/webpush/assets/index-0cb35bc2.css">
+    <script type="module" crossorigin src="/webpush/assets/index-c196d9a7.js"></script>
+    <link rel="stylesheet" href="/webpush/assets/index-d37c2e6f.css">
   </head>
   <body>
     <div id="app"></div>
@@ -17,6 +17,12 @@
             .then((registration) => {
               registration.id = `appsw`
               return registration
+            })
+            navigator.serviceWorker.addEventListener('message',(e)=>{
+              console.log('SWMSG', e)
+              if(e.data.color && e.data.sender && e.data.sender === `appsw`){
+                document.querySelector(`#app`).setAttribute(`style`,`background-color:${e.data.color}`)
+              }
             })
         }
         register()

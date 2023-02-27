@@ -6,7 +6,8 @@ export default defineComponent({
   data() {
     return {
       notificationStore: useNotificationStore(),
-      show: true
+      show: true,
+      text: null
     }
   },
   mounted() {
@@ -24,6 +25,10 @@ export default defineComponent({
         this.show = false
       }
     }
+    this.notificationStore.$subscribe((mutation, state) => {
+      console.log(mutation)
+      this.text = JSON.stringify(state)
+    })
   },
   methods: {
     requestPermission() {
@@ -42,18 +47,33 @@ export default defineComponent({
         `Hello, you have just requested a notification, so here we go!`,
         5
       )
+    },
+    notifyMeNow() {
+      this.notificationStore.sendNotification(
+        `Instant notification`,
+        `This is an instant notification with some emojis: 💁👌🎍😍!`,
+        0
+      )
     }
   }
 })
 </script>
 
 <template>
-  <v-app class="w-100 h-100">
+  <v-app class="w-100 h-100" style="background-color: transparent;">
     <v-container class="d-flex justify-center align-center w-100 h-100">
-      <v-card elevation="0">
+      <v-card elevation="0" style="background-color: transparent;">
         <v-card-text>
           <v-btn v-if="show" @click="requestPermission">WANT TO BE NOTIFIED!</v-btn>
-          <v-btn v-else color="success" @click="notifyMe">NOTIFY ME IN 5s</v-btn>
+          <v-row v-else>
+            <v-col cols="12" class="d-flex justify-center"
+              ><v-btn color="success" @click="notifyMe">NOTIFY ME IN 5s</v-btn>
+            </v-col>
+            <v-col cols="12" class="d-flex justify-center">
+              <v-btn color="error" @click="notifyMeNow">NOTIFY ME NOW</v-btn>
+            </v-col>
+          </v-row>
+          <pre color="gray" class="my-5 text-center">{{ text }}</pre>
         </v-card-text>
       </v-card>
     </v-container>
@@ -87,4 +107,10 @@ header {
     flex-wrap: wrap;
   }
 }
+ pre {
+  background-color: black;
+  color: white;
+  padding: 1rem;
+  border-radius: 6px;
+ }
 </style>

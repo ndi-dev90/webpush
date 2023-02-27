@@ -5,10 +5,12 @@ const prevState = JSON.parse(localStorage.getItem(`noti-app`))
 export const useNotificationStore = defineStore('notification', {
   state: () => {
     if (prevState) {
+      prevState.notification.reg = null
       return prevState.notification
     } else {
       return {
-        permission: null
+        permission: null,
+        reg: null
       }
     }
   },
@@ -21,8 +23,13 @@ export const useNotificationStore = defineStore('notification', {
     sendNotification(title, text, timeout = 2) {
       if (this.permission === `granted`) {
         setTimeout(() => {
+          /*navigator.serviceWorker.controller.postMessage(
+            `next message: ${title}, after ${timeout} secs`
+          )*/
           navigator.serviceWorker.getRegistration('/webpush/').then((reg) => {
-            console.log('SW REG', reg)
+            console.log('SW REGgg', reg)
+            reg.active.postMessage(`next message: ${title}, after ${timeout} secs`)
+            this.reg = reg.id
             reg.showNotification(title, { body: text })
           })
         }, timeout * 1000)

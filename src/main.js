@@ -10,10 +10,14 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
 function register() {
-  navigator.serviceWorker.register('../../sw.js').then((registration) => {
-    registration.id = `appsw`
-    return registration
-  })
+  console.log('ENV', import.meta.env)
+  const sw = import.meta.env.prod ? `../../webpush/sw.js` : `../../sw.js`
+  navigator.serviceWorker
+    .register(sw, { scope: import.meta.env.prod ? `/webpush/` : `` })
+    .then((registration) => {
+      registration.id = `appsw`
+      return registration
+    })
 }
 register()
 
